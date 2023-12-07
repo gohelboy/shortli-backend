@@ -59,12 +59,11 @@ app.get('/get-urls', async (req, res) => {
 })
 
 app.get('/:shortUrl', async (req, res) => {
-    console.log("redirect")
     const { shortUrl } = req.params;
     try {
         const url = await Url.findOne({ shortUrl });
         if (!url) return res.status(404).json('URL not found');
-        return res.redirect(url.originalUrl);
+        res.status(200).json({ originalUrl: url.originalUrl });
     } catch (err) {
         console.error(err);
         res.status(500).json('Server error');
