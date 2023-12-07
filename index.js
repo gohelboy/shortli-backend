@@ -58,10 +58,10 @@ app.get('/get-urls', async (req, res) => {
     }
 })
 
-app.get('/redirect/:shortUrl', async (req, res) => {
+app.get('/:shortUrl', async (req, res) => {
+    console.log("redirect")
     const { shortUrl } = req.params;
     try {
-        console.log('call')
         const url = await Url.findOne({ shortUrl });
         if (!url) return res.status(404).json('URL not found');
         return res.redirect(url.originalUrl);
@@ -72,7 +72,7 @@ app.get('/redirect/:shortUrl', async (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
